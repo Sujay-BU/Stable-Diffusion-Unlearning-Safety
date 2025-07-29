@@ -1,17 +1,19 @@
 # Stable-Diffusion-Unlearning-Safety
 **Contributors:** Micah Benson & Sujayanand Kingsly  
+
+## Aim
 This repository aims to analyze the effects of safety of machine unlearning on Stable Diffusion 1.4
 
-# Installation Guide
+## Installation Guide
 * To get started clone the following repository of Original Stable Diffusion [Link](https://github.com/CompVis/stable-diffusion)
 * Then download the files from our repository to `stable-diffusion` main directory of stable diffusion. This would replace the `ldm` folder of the original repo with our custom `ldm` directory
 * Download the weights from [here](https://huggingface.co/CompVis/stable-diffusion-v-1-4-original/resolve/main/sd-v1-4-full-ema.ckpt) and move them to `SD/models/ldm/`
 * [Only for training] To convert your trained models to diffusers download the diffusers Unet config from [here](https://huggingface.co/CompVis/stable-diffusion-v1-4/blob/main/unet/config.json)
 
-# Unlearned Weights
+## Unlearned Weights
 The unlearned weights for NSFW and object forgetting are available [here](https://drive.google.com/drive/folders/1fOx-v_ru3NfB2rPe5LGxaQS-Q17QzKzp?usp=sharing).
 
-# Forgetting Training with Saliency-Unlearning
+## Forgetting Training with Saliency-Unlearning
 1. First, we need to generate saliency map for unlearning.
 
    ```
@@ -38,7 +40,7 @@ The unlearned weights for NSFW and object forgetting are available [here](https:
     python train-scripts/train-esd.py --prompt 'your prompt' --train_method 'your choice of training' --devices '0,1'
     ```
 
-# Generating Images
+## Generating Images
   1. To use `eval-scripts/generate-images.py` you would need a csv file with columns `prompt`, `evaluation_seed` and `case_number`. (Sample data in `data/`)
   2. To generate multiple images per prompt use the argument `num_samples`. It is default to 10.
   3. The path to model can be customised in the script.
@@ -47,7 +49,7 @@ The unlearned weights for NSFW and object forgetting are available [here](https:
         python eval-scripts/generate-images.py --prompts_path 'prompts/imagenette.csv' --save_path 'evaluation_folder/ --model_name {model} --device 'cuda:0'
         ``` 
 
-# Evaluation
+## Evaluation
 1. FID
    * First,we need to select some images from Imagenette as real images.
    * Then, we can compute FID between real images and generated images. 
@@ -79,5 +81,5 @@ The unlearned weights for NSFW and object forgetting are available [here](https:
    python train-scripts/nsfw_removal.py --train_method 'full' --mask_path 'mask/nude_0.5.pt' --device '0'
    ```
 
-# Results
+## Results
 We observed no adverse chnages to the level of safety of stable diffusion 1.4's outputs when saliency unlearning was used to forget a concept.
